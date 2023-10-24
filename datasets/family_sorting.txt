@@ -1,0 +1,14 @@
+Paul       makes a gift to Mia.
+Mia        makes a gift to Elodie.
+Elodie     makes a gift to Elena.
+Elena      makes a gift to Alexis.
+Alexis     makes a gift to Cléo.
+Cléo       makes a gift to Matthieu.
+Matthieu   makes a gift to Batiste.
+Batiste    makes a gift to Nelly.
+Nelly      makes a gift to Maïté.
+Maïté      makes a gift to Laurent.
+Laurent    makes a gift to Yann.
+Yann       makes a gift to Mickaël.
+Mickaël    makes a gift to Luc.
+Luc        makes a gift to Paul.

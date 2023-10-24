@@ -79,7 +79,7 @@ def work_a_distribution(participants: Dict[str, Participant], path: List[Partici
         return True
 
     for name, par in participants.items():
-        if par not in path:
+        if par not in path and (path == [] or par in path[-1].options):
             path.append(par)  # Trying…
             if work_a_distribution(participants, path):
                 return True
