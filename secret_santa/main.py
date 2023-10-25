@@ -41,7 +41,9 @@ def parse_input_exclusions(file: Path) -> List[Tuple[str, str]]:
 
 
 if "__main__" == __name__:
-    parser = argparse.ArgumentParser(prog="SantaSorter", description="OuiHelp's Secret Santa Sorter!", epilog="\u201CHo Ho Ho!\u201D")
+    parser = argparse.ArgumentParser(prog="SantaSorter",
+                                     description="OuiHelp's Secret Santa Sorter!",
+                                     epilog="\u201CHo Ho Ho!\u201D")
     parser.add_argument("names", type=Path, help="The party participants as a text file.")
     parser.add_argument("exclusions", type=Path, help="The exclusions as a text file.")
     parser.add_argument("sorting", type=argparse.FileType("w", encoding="utf-8"),
@@ -63,16 +65,16 @@ if "__main__" == __name__:
 
     # TODO ensure names found in exclusions exist in participants.
 
-    print("Prepping datasets…")
+    print("1/3 Prepping datasets…")
     participants = lib.parse_data(names, exclusions)
 
-    print("Securing participants with limited options…")
+    print("2/3 Securing participants with limited options…")
     participants = lib.secure_one_option_participants(participants)
 
-    print("Working Santa's magic…")
+    print("3/3 Working Santa's magic…")
     path = []
     if lib.work_a_distribution(participants, path):
-        path.append(path[0])  # Duplicate the first node to "close" the path.
+        path.append(path[0])
 
         for i in range(len(path) - 1):
             args.sorting.write(f"{path[i].name:10.10s} makes a gift to {path[i+1].name}.\n")

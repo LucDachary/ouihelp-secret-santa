@@ -5,11 +5,6 @@ from secret_santa.model import Participant
 
 
 class LibTestCase(TestCase):
-    @skip("TODO")
-    def test_parse_data_empty(self):
-        """Try to parse an empty data set."""
-        pass
-
     def test_parse_data_ouihelp(self):
         people = set(["Florent", "Jessica", "Coline", "Emilien", "Ambroise", "Bastien"])
         exclusions = [("Florent", "Jessica"), ("Coline", "Emilien")]
@@ -32,6 +27,11 @@ class LibTestCase(TestCase):
                          "Bastien, Coline, Emilien, Florent, Jessica")
         self.assertEqual(participants["Bastien"].options_str,
                          "Ambroise, Coline, Emilien, Florent, Jessica")
+
+    @skip("TODO")
+    def test_parse_data_empty(self):
+        """Try to parse an empty data set."""
+        pass
 
     def test_secure(self):
         # A, B, C, D
@@ -68,9 +68,7 @@ class LibTestCase(TestCase):
         self.assertEqual(len(mapping), len(secured_mapping))
 
         #
-        # Domino effect
-
-        # Chronologically:
+        # Domino effect explanation. Chronologically:
         # 1. Albert is the sole recipient option of David, it is secured;
         #    →  Bertrand and Caroline no longer have Albert as recipient option.
         # 2. Caroline is down to one recipient option, David is being secured;
@@ -83,6 +81,13 @@ class LibTestCase(TestCase):
         self.assertEqual(bertrand.options, set([caroline]))
         self.assertEqual(caroline.options, set([david]))
         self.assertEqual(david.options, set([albert]))
+
+    @skip("TODO")
+    def test_secure_fail(self):
+        """Test the behavior of the function with a set where a participant drops to zero recipient
+        option.
+        """
+        pass
 
     def test_work(self):
         # A, B, C, D

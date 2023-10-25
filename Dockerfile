@@ -5,4 +5,4 @@ WORKDIR /usr/src/app
 COPY secret_santa secret_santa/
 COPY datasets datasets/
 
-CMD "python -m secret_santa.main"
+CMD "sh"

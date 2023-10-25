@@ -4,7 +4,7 @@ from typing import Set, Optional
 class Participant:
     """A Secret Santa participant, represented by its name.
 
-    Each participant has a set of valid recipient options.
+    Each participant has its set of valid recipient options.
     """
     __name: str
     __options: Set
@@ -45,7 +45,6 @@ class Participant:
         return ", ".join(sorted(map(str, self.__options)))
 
     def __str__(self):
-        """Return a string representation of this Participant."""
         return self.__name
 
     def __repr__(self):

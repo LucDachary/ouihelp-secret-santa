@@ -12,7 +12,7 @@ LOG_CONFIG = {
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
-            # Change this to "DEBUG" to see traces in console.
+            # Change this to "DEBUG" to see traces in the console.
             "level": "INFO",
             "formatter": "detailed",
         },

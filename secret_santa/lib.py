@@ -1,5 +1,5 @@
-import logging
 from typing import List, Tuple, Dict, Set
+import logging
 
 from secret_santa.model import Participant
 
@@ -9,8 +9,7 @@ logger = logging.getLogger(__name__)
 def parse_data(names: Set[str], exclusions: List[Tuple[str, str]]) -> Dict[str, Participant]:
     """Parse and build the set of Participant.
 
-    exclusions represent pairs of names that must not be options for one another.
-    Each Participant has its list of valid recipient options.
+    exclusions represent pairs of names that must not be recipient options for one another.
     Return a mapping of names and Participant.
     """
     # Each Participant is initialised with zero option.
@@ -33,9 +32,8 @@ def secure_one_option_participants(participants: Dict[str, Participant]) -> Dict
     """Browse and modify the list of participants to secure the single options.
 
     If a participant only has one recipient option, this function will try to remove it from others'
-    recipient options, to "secure" it.
-
-    Return the refined mapping.
+    recipient options, to "secure" it. Return the refined mapping.
+    Raise RuntimeError in case a participant's sole recipient cannot be secured.
     """
     logging.debug(f"Got participants to secure: {participants!r}")
 
@@ -47,12 +45,13 @@ def secure_one_option_participants(participants: Dict[str, Participant]) -> Dict
 
         for par in participants.values():
             if vip != par:
-                # That would make an interesting search: https://stackoverflow.com/a/60233
+                # according to lehiester (https://stackoverflow.com/a/60233), the min() function
+                # would be the most efficient way to get the value of a one-item set. Interesting!
                 try:
                     par.options.remove(min(vip.options))
 
                     match len(par.options):
-                        # We might have created another "single recipient option" participant,
+                        # We might have created another "single recipient" participant,
                         # so queue up!
                         case 1:
                             logging.debug(f"{par.name} is down to one option. To be secured…")
@@ -67,12 +66,14 @@ def secure_one_option_participants(participants: Dict[str, Participant]) -> Dict
 
 
 def work_a_distribution(participants: Dict[str, Participant], path: List[Participant]) -> bool:
-    """Browse the list of participants using a backtrack algorithm.
+    """Browse the list of participants to build a secret santa sorting.
 
-    In case a valid distribution is found, path will represent the chain of sender-recipient.
+    This function uses a backtrack algorithm. In case a valid distribution is found, path will
+    represent the chain of sender-recipient. The last participant in the path will make a gift to
+    the first participant in the path.
     Return false in case no valid distribution can be worked out.
 
-    This is a recursive function.
+    Warning: this is a recursive function.
     """
     if len(path) == len(participants) and path[0] in path[-1].options:
         logging.debug(f"Found a path! {path=!r}")
